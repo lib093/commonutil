@@ -2,7 +2,10 @@ buildscript {
     repositories {
         jcenter()
         google()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://jitpack.io"
+            credentials { username "jp_an4qv9qir25q8f31ulnbkpfhvr" }
+        }
 //        maven{ url 'https://maven.aliyun.com/repository/public/'}
     }
     dependencies {
@@ -21,7 +24,10 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://jitpack.io"
+            credentials { username "jp_an4qv9qir25q8f31ulnbkpfhvr" }
+        }
     }
 
 }
