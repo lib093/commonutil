@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.kiosoft2.testdemo.activity.OverLineEdixView
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:text="testest01test01tetest01test01test01test01test01test01st01test01test01test01test01test01test01t01"
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:ellipsize="end"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:text="test01"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="left"/>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:text="跳转"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_post"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:text="发送"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:text="stop"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
