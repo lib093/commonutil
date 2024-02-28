@@ -17,6 +17,7 @@ android {
         resConfigs "fr", "es"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "2584c3c88377489b86e90dd3975c3344"]
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+//        proguardFiles += file('jitpack-proguard.conf')
         javaCompileOptions {
             annotationProcessorOptions {
                 annotationProcessorOptions {
@@ -44,16 +45,16 @@ android {
     flavorDimensions "versionCode"
     buildTypes {
         release {
-            minifyEnabled false
-            zipAlignEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'DATA_CONNECTING', "\"https://central-prod.kiosoft.com:21000\""
 //            buildConfigField 'String', 'DATA_CONNECTING', "\"https://centralqa.kiosoft.com:62000\""
         }
         debug {
             debuggable true
-            minifyEnabled false
-            zipAlignEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
@@ -90,17 +91,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-
-//    aspectjx {
-//        //排除所有package的class文件及库（jar文件）
-////        exclude 'androidx'
-////        exclude 'versions.9'
-//
-//        enabled true
-//        exclude('androidx')
-//        //只织入指定包路径下的类
-//        include 'com.kiosoft2.testdemo.activity','android.view'
-//    }
 }
 aspectjx {
     exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao',
@@ -115,6 +105,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+//    implementation 'com.github.jitpack:jitpack:jitpack-proguard:1.0.0'
     api project(path:':common')
     api project(path:':api')
     kapt project(path: ':processor')

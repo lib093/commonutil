@@ -10,6 +10,7 @@ import com.kiosoft2.common.autoservice.ServiceLoad
 import com.kiosoft2.common.autoservice.service.TaskService
 import com.kiosoft2.common.click.ClickExe.setSafeOnClickListener
 import com.kiosoft2.common.click.annotions.SingleTime
+import com.kiosoft2.common.encrypt.EncryptService
 import com.kiosoft2.testdemo.databinding.ActivityTest01Binding
 import com.kiosoft2.common.task.annotions.DelayedTask
 import com.kiosoft2.common.task.annotions.TaskBindDisposable
@@ -36,6 +37,9 @@ class TestActivity05 : AppCompatActivity(), TaskReLoadCallback {
     var taskService: TaskService? = lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
         ServiceLoad.load(TaskService::class.java)
     }.value
+    var encryptService: EncryptService? = lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+        ServiceLoad.load(EncryptService::class.java)
+    }.value
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var mBinding = ActivityTest01Binding.inflate(layoutInflater)
@@ -47,7 +51,8 @@ class TestActivity05 : AppCompatActivity(), TaskReLoadCallback {
 //            ServiceLoad.load(TaskService::class.java)
 //        }.value
         mBinding.btnNext.setSafeOnClickListener {
-            startActivity(Intent(this@TestActivity05,TestActivity03::class.java))
+           // startActivity(Intent(this@TestActivity05,TestActivity03::class.java))
+            Log.d("lance", "加密测试: ${encryptService?.getEncrypt("121212")}")
         }
         mBinding.btnStop.setOnClickListener {
 //            testSingleTime()

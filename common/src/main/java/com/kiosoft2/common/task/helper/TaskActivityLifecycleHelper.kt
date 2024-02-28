@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 
 class TaskActivityLifecycleHelper(taskManager:TaskManager): Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        Log.d("lance", "onActivityCreated:    ${activity.javaClass.name} : ")
         GlobalScope.launch(Dispatchers.Main) {
                 //获取任务管理器
             TaskCacheManager.getCacheTaskListByOwerClassName(activity.javaClass.name)?.forEach {
@@ -35,7 +34,6 @@ class TaskActivityLifecycleHelper(taskManager:TaskManager): Application.Activity
                         it.unit
                     )
                     it.lifecycleOwner = activity as LifecycleOwner
-                    Log.d("lance", "重新执行 时长:    ${it.time} ")
                     TaskReLoadUtil.reLoadStart(activity, it, object :
                         TaskReLoadCallback {
                         override fun onReLoadStart(taskInfo: TaskInfo) {
@@ -58,10 +56,6 @@ class TaskActivityLifecycleHelper(taskManager:TaskManager): Application.Activity
                                 activity,
                                 TaskComplete::class.java,
                                 taskInfo
-                            )
-                            Log.d(
-                                "lance",
-                                " ${activity.javaClass.name}  RecurringTask  ${taskInfo.taskId}   ${taskInfo.taskCode}  完成"
                             )
                             TaskManager.removeTask(activity, taskInfo)
                         }
