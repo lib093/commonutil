@@ -1,7 +1,6 @@
 package com.kiosoft2.common.model
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.kiosoft2.common.bus.LiveDataBus
@@ -60,4 +59,5 @@ open class BaseLifecycleOwnerImpl : ILifecycleOwner(), ILifecycleEventObserver {
             }
         }
     }
+
 }

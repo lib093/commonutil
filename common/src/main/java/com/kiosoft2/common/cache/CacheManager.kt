@@ -2,6 +2,7 @@ package com.kiosoft2.common.cache
 
 import android.app.Application
 import android.util.Log
+import androidx.annotation.Keep
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CopyOnWriteArrayList
-
+@Keep
 object CacheManager {
     lateinit var mmkv:MMKV
     var gson = GsonBuilder()

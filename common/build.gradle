@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.kiosoft2.common'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 21
@@ -61,8 +61,8 @@ dependencies {
 
 
 //    //协程核心库
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0'
     //这个库在 Android 项目中才会用到
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
 
 }
