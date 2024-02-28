@@ -5,9 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
-import com.kiosoft2.common.cache.CacheManager
-import com.kiosoft2.common.task.annotions.DelayedTask
-import com.kiosoft2.common.task.annotions.RecurringTask
+import com.kiosoft2.common.cache.TaskCacheManager
 import com.kiosoft2.common.task.annotions.TaskBindDisposable
 import com.kiosoft2.common.task.annotions.TaskComplete
 import com.kiosoft2.common.task.interfaces.TaskReLoadCallback
@@ -19,17 +17,16 @@ import com.kiosoft2.common.task.util.TimeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TaskActivityLifecycleHelper(taskManager:TaskManager): Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         Log.d("lance", "onActivityCreated:    ${activity.javaClass.name} : ")
         GlobalScope.launch(Dispatchers.Main) {
                 //获取任务管理器
-            CacheManager.getCacheTaskListByOwerClassName(activity.javaClass.name)?.forEach {
+            TaskCacheManager.getCacheTaskListByOwerClassName(activity.javaClass.name)?.forEach {
                     //校验时间是否过期
                     if (it.endTimeMillis < System.currentTimeMillis()) {
-                        CacheManager.removeCacheTask(it)
+                        TaskCacheManager.removeCacheTask(it)
                         return@forEach
                     }
                     //将是结束时间点转换为时间长度

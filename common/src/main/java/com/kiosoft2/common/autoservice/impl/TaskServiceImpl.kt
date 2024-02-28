@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.google.auto.service.AutoService
 import com.kiosoft2.common.autoservice.service.TaskService
-import com.kiosoft2.common.cache.CacheManager.getCacheTaskListByOwerClassName
-import com.kiosoft2.common.cache.CacheManager.getCacheTaskListByOwerClassNameAndTaskId
-import com.kiosoft2.common.cache.CacheManager.removeCacheTask
+import com.kiosoft2.common.cache.TaskCacheManager.getCacheTaskListByOwerClassName
+import com.kiosoft2.common.cache.TaskCacheManager.getCacheTaskListByOwerClassNameAndTaskId
+import com.kiosoft2.common.cache.TaskCacheManager.removeCacheTask
 import com.kiosoft2.common.task.annotions.TaskBindDisposable
 import com.kiosoft2.common.task.annotions.TaskComplete
 import com.kiosoft2.common.task.interfaces.TaskReLoadCallback

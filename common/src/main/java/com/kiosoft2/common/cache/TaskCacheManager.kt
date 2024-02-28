@@ -1,10 +1,8 @@
 package com.kiosoft2.common.cache
 
 import android.app.Application
-import android.util.Log
 import androidx.annotation.Keep
 import androidx.room.Room
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.kiosoft2.common.cache.configs.TASK_CACHE_KEY
@@ -13,8 +11,6 @@ import com.kiosoft2.common.cache.db.database.AppDataBase
 import com.kiosoft2.common.task.model.TaskInfo
 import com.kiosoft2.common.task.util.TaskInfoRepository
 import com.tencent.mmkv.MMKV
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,7 +18,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CopyOnWriteArrayList
 @Keep
-object CacheManager {
+object TaskCacheManager {
     lateinit var mmkv:MMKV
     var gson = GsonBuilder()
         .excludeFieldsWithoutExposeAnnotation() // 仅包含带有 @Expose 注解的字段

@@ -1,8 +1,8 @@
 package com.kiosoft2.testdemo
 
 import android.app.Application
-import com.kiosoft2.common.cache.CacheManager
-import com.kiosoft2.common.task.util.TaskManager.registerActivityLifecycleCallbacks
+import com.kiosoft2.common.cache.TaskCacheManager
+import com.kiosoft2.common.task.util.TaskManager
 import com.tencent.mmkv.MMKV
 import com.ubix.kiosoft2.db.DBOperator
 
@@ -18,7 +18,7 @@ class MyApplication:Application() {
         super.onCreate()
         MMKV.initialize(this)
         myApplication = this
-        CacheManager.init(this)
+        TaskManager.init(this)
         DBOperator.init(this)
     }
 }

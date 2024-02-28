@@ -4,15 +4,13 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.kiosoft2.common.cache.CacheManager
+import com.kiosoft2.common.cache.TaskCacheManager
 import com.kiosoft2.common.task.helper.TaskActivityLifecycleHelper
 import com.kiosoft2.common.task.model.TaskInfo
 import com.kiosoft2.testdemo.bus.impl.ILifecycleEventObserver
-import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.aspectj.lang.ProceedingJoinPoint
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -26,8 +24,8 @@ object TaskManager : ILifecycleEventObserver {
     var taskActivityLifecycleHelper: TaskActivityLifecycleHelper = lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         TaskActivityLifecycleHelper(this)
     }.value
-
-    fun registerActivityLifecycleCallbacks(application: Application) {
+    fun init(application: Application){
+        TaskCacheManager.init(application)
         application.registerActivityLifecycleCallbacks(taskActivityLifecycleHelper)
     }
     @Synchronized
@@ -43,7 +41,7 @@ object TaskManager : ILifecycleEventObserver {
                     if (it.isRunning()) {
                         isExist = true
                     }else {
-                        GlobalScope.launch { CacheManager.removeCacheTask(it) }
+                        GlobalScope.launch { TaskCacheManager.removeCacheTask(it) }
                         if (removeLifecycleMap) {
                             lifecycleMap[obj as LifecycleOwner]?.remove(it)
                         }
@@ -83,7 +81,7 @@ object TaskManager : ILifecycleEventObserver {
                         lifecycleMap[o as LifecycleOwner]?.remove(it)
                     }
                     GlobalScope.launch(Dispatchers.Main) {
-                        CacheManager.removeCacheTask(it)
+                        TaskCacheManager.removeCacheTask(it)
                     }
                     cacheList.remove(it)
                 }
@@ -108,7 +106,7 @@ if (cacheList == null || cacheList.size == 0) {
                 }
                 if (it.isCacheResumeStart)
                     GlobalScope.launch(Dispatchers.Main) {
-                        CacheManager.removeCacheTask(it)
+                        TaskCacheManager.removeCacheTask(it)
                     }
                 cacheList.remove(it)
             }
@@ -127,7 +125,7 @@ private fun cacheTask(obj: Any, taskInfo: TaskInfo) {
     cacheHashMap[obj.javaClass.name] = list
     if (taskInfo.isCacheResumeStart) {
         //持久化
-        CacheManager.cacheTask(taskInfo)
+        TaskCacheManager.cacheTask(taskInfo)
     }
 }
 
