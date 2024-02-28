@@ -67,10 +67,10 @@
 -keep class kotlinx.coroutines.android.** {*;}
 
 
-## 不混淆 TaskServiceImpl 类名
-#-keepnames class com.kiosoft2.encrypt.EncryptServiceImpl
-#
-## 不混淆 TaskServiceImpl 类的方法名
-#-keepclassmembers  class com.kiosoft2.encrypt.EncryptServiceImpl {
-#    public <methods>;
-#}
+# 不混淆 TaskServiceImpl 类名
+-keepnames class com.kiosoft2.encrypt.EncryptServiceImpl
+
+# 不混淆 TaskServiceImpl 类的方法名
+-keepclassmembers  class com.kiosoft2.encrypt.EncryptServiceImpl {
+    public <methods>;
+}
