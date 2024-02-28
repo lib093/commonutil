@@ -1,3 +1,113 @@
+# 引入依赖(jitpack)
+
+
+
+```groovy
+    repositories {
+        jcenter()
+        google()
+        maven {
+            url "https://jitpack.io"
+            credentials { username "jp_an4qv9qir25q8f31ulnbkpfhvr" }
+        }
+    }
+ classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
+
+```
+
+```groovy
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'android-aspectjx'
+apply plugin: 'kotlin-kapt'
+android {
+    ..............
+    .............    
+    defaultConfig {
+    ..............
+    .............
+        javaCompileOptions {
+            annotationProcessorOptions {
+                annotationProcessorOptions {
+                    arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                    "room.incremental":"true",
+                    "room.expandProjection":"true"]
+                }
+            }
+        }
+    }
+
+}
+aspectjx {
+    exclude 'androidx', 'com.google', 'com.squareup',
+            'org.apache',
+            'org.jetbrains.kotlin',
+            "module-info", 'versions.9'
+}
+dependencies {
+
+    .................
+        .......
+        ...............
+    
+    api ("com.github.lib093.commonutil:common:v_1.0.3")
+    api ("com.github.lib093.commonutil:api:v_1.0.3")
+    kapt ("com.github.lib093.commonutil:processor:v_1.0.3")
+    kapt ("androidx.room:room-compiler:2.6.1")
+}
+```
+
+### 混淆配置：
+
+```
+ #保持自定义库的所有类和成员不被混淆
+-keep class com.kiosoft2.common.** { *; }
+-keep class com.kiosoft2.common.**.** { *; }
+-keep class com.kiosoft2.processor.** { *; }
+-keep class com.kiosoft2.api.**.** { *; }
+-keep class com.kiosoft2.api.** { *; }
+-keep class com.squareup.javapoet.** { *; }
+# 如果自定义库中有一些特定的注解需要保持不被混淆，可以添加类似的规则
+-keep @com.kiosoft2.common.thead.annotions.** class * {*;}
+-keep @com.kiosoft2.common.click.annotions.** class * {*;}
+-keep @com.kiosoft2.common.task.annotions.** class * {*;}
+
+# 如果自定义库中使用了一些特定的接口，也需要保持不被混淆
+-keep interface com.example.customlibrary.interfaces.** { *; }
+-keep interface com.kiosoft2.common.task.interfaces.** { *; }
+
+# 如果自定义库包含一些特定的枚举类型，同样需要保持不被混淆
+-keepclassmembers enum com.kiosoft2.common.task.annotions.** { *; }
+
+
+-keep class com.kiosoft2.common.autoservice.aspect.TaskServiceBindAspect {*;}
+-keepclassmembers class * {
+    @com.kiosoft2.common.autoservice.annotions.BindTaskService *;
+}
+
+
+# Room
+-keep class androidx.room.paging.** {
+    *;
+}
+-keep class androidx.room.** {
+    *;
+}
+# Room database entities should be excluded from obfuscation
+-keep @androidx.room.Entity class * {
+    *;
+}
+
+# Keep the default constructor for Room database entities
+-keepclassmembers class * {
+    @androidx.room.Entity <init>(...);
+}
+
+-keep class org.jetbrains.kotlinx.coroutines.** { *; }
+-keep class kotlinx.coroutines.android.** {*;}
+```
+
 # 任务
 
 ## 	**@RecurringTask**  **周期性任务**
@@ -581,17 +691,17 @@ DBOperator.init(this);
 
  * ```kotlin
  /**
- 
+
   * @version: 1.0
     
      * @description: 描述
        */
-    @Database(entities = [User::class,Book::class], exportSchema = true, version = 1)
+      @Database(entities = [User::class,Book::class], exportSchema = true, version = 1)
        abstract class DBOperator : RoomOperator() {
-    override fun <T> getEntity(entityClass: Class<T>): Entity<T> {
+      override fun <T> getEntity(entityClass: Class<T>): Entity<T> {
            return EntityManager.getEntity(entityClass)
        }
- 
+
        abstract fun getBookDao(): BookDao?
     
        companion object {
@@ -611,34 +721,34 @@ DBOperator.init(this);
                        .build()
                }
            }
-        
+      
         fun get(): DBOperator? {
             return dbOperator
         }
- 
+
     }
     }
  ```
  
  ### 3.自定义实体表
 
-```
+ ```
 @Entity
 public class Book implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
-
+    
     private String name;
-
+    
     private int page;
-
+    
     private long uid;
-
+    
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
