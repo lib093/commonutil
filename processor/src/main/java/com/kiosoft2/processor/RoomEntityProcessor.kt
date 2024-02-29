@@ -63,7 +63,6 @@ class RoomEntityProcessor: AbstractProcessor() {
         //初始化
         processingEnv?.apply {
             MSG = messager
-            MSG.print("参数注解处理器初始化开始")
             mElement = elementUtils
             mTypes = typeUtils
             mFiler = filer
@@ -74,14 +73,11 @@ class RoomEntityProcessor: AbstractProcessor() {
         roundEnv: RoundEnvironment?
     ): Boolean {
         if (annotations.isNullOrEmpty()) {
-            MSG.print("没有发现需要处理的注解")
             return false
         }
-        MSG.print("参数注解处理器开始处理")
         //记录实体关系类
         var entityRelationList = arrayListOf<EntityRelation>()
         roundEnv?.getElementsAnnotatedWith(Entity::class.java)?.forEach {item ->
-            MSG.print("发现注解类：${item.simpleName}")
             //记录复合主键
             var compositePK = arrayListOf<String>()
             //记录列名
@@ -155,7 +151,6 @@ class RoomEntityProcessor: AbstractProcessor() {
         }
         //生成实体管理类
         this@RoomEntityProcessor.generateEntityManager(entityRelationList)
-        MSG.print("参数注解处理器处理完成")
         return true
     }
     /**
@@ -216,9 +211,6 @@ class RoomEntityProcessor: AbstractProcessor() {
      * @param packageName 包名
      */
     private fun outPutJavaFile(build: TypeSpec,className:String, packageName: String) {
-//        var typeSpec = TypeSpec.classBuilder(className)//创建类
-//            .addType(build)//添加方法
-//            .build()
         //创建文件
         FileSpec.builder(packageName,className)
             .addType(build)
@@ -370,14 +362,14 @@ class RoomEntityProcessor: AbstractProcessor() {
                 bindType = "bindLong"
                 isBoolean = true
                 bindValueTemplate =
-                    String.format("'1'.equal.(%s.defaultValue) ? 1 : 0", propertyField)
+                    String.format("if(\"1\".equals(%s.defaultValue))  1 else 0", propertyField)
             }
 
             "boolean" -> {
                 bindType = "bindLong"
                 isBoolean = true
                 bindValueTemplate =
-                    String.format("'1'.equal.(%s.defaultValue) ? 1 : 0", propertyField)
+                    String.format("if(\"1\".equals(%s.defaultValue) ) 1 else 0", propertyField)
             }
 
             "java.lang.Integer", "java.lang.Long", "java.lang.Short" -> {
@@ -394,25 +386,25 @@ class RoomEntityProcessor: AbstractProcessor() {
             "java.lang.Byte" -> {
                 isPacking = true
                 bindType = "bindBlob"
-                bindValueTemplate = String.format("Byte.parseByte(%s.defaultValue)", propertyField)
+                bindValueTemplate = String.format("%s.defaultValue.toByteArray()", propertyField)
             }
 
             "byte" -> {
                 bindType = "bindBlob"
-                bindValueTemplate = String.format("Byte.parseByte(%s.defaultValue)", propertyField)
+                bindValueTemplate = String.format("%s.defaultValue.toByteArray()", propertyField)
             }
 
             "java.lang.Float", "java.lang.Double" -> {
                 isPacking = true
                 bindType = "bindDouble"
                 bindValueTemplate =
-                    String.format("Double.parseDouble(%s.defaultValue)", propertyField)
+                    String.format("%s.defaultValue.toDouble()", propertyField)
             }
 
             "float", "double" -> {
                 bindType = "bindDouble"
                 bindValueTemplate =
-                    String.format("Double.parseDouble(%s.defaultValue)", propertyField)
+                    String.format("%s.defaultValue.toDouble()", propertyField)
             }
 
             else -> {
@@ -464,7 +456,7 @@ class RoomEntityProcessor: AbstractProcessor() {
                 }
                 "bindBlob" -> {
                     str = "%L.%L(bindIndex++, " +
-                            "%L.get%L().toByteArray()" +
+                            "byteArrayOf(%L.get%L())" +
                             ")"
                 }
                 "bindNull" ->{
@@ -483,11 +475,6 @@ class RoomEntityProcessor: AbstractProcessor() {
                             ")"
                 }
             }
-            MSG.print("==========================================")
-            MSG.print("==========================================")
-            MSG.print("===========bindType========${bindType}=======================")
-            MSG.print("============valueField=============${valueField}=================")
-            MSG.print("============str=============${str}=================")
             methodSpecBuilder.addCode(
                 (if (isElse) "   " else "") + (if (isPublic) "%L.%L(bindIndex++, %L.%L);" else str) + if (isElse) "\n}\n" else "\n",
                 stmtField,

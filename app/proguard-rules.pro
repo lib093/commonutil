@@ -19,7 +19,27 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-dontpreverify
+-verbose
+-dump class_files.txt
+-printseeds seeds.txt
+-printusage unused.txt
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
+-ignorewarnings
+
+-allowaccessmodification
+-keepattributes *Annotation*
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+-repackageclasses ''
+#-printmapping mapping.txt
+
+-keep public class * extends java.lang.Exception
  #保持自定义库的所有类和成员不被混淆
 -keep class com.kiosoft2.common.** { *; }
 -keep class com.kiosoft2.common.**.** { *; }

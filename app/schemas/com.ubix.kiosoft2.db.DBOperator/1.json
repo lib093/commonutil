@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4bc57beb9545c9c4a709c581ae6aadb8",
+    "identityHash": "6207f99fb2a0a28bb7a61d6a9d67c373",
     "entities": [
       {
         "tableName": "tb_user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_name` TEXT, `age` INTEGER NOT NULL DEFAULT 10, `address` TEXT, `sex` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_name` TEXT, `age` INTEGER NOT NULL DEFAULT 10, `a1` REAL NOT NULL, `a2` INTEGER NOT NULL, `a3` INTEGER NOT NULL, `a4` BLOB, `a5` INTEGER NOT NULL, `a6` REAL, `a7` INTEGER, `a8` INTEGER, `a9` INTEGER, `a10` INTEGER, `a11` INTEGER, `address` TEXT, `sex` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -26,6 +26,72 @@
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "10"
+          },
+          {
+            "fieldPath": "a1",
+            "columnName": "a1",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "a2",
+            "columnName": "a2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "a3",
+            "columnName": "a3",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "a4",
+            "columnName": "a4",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a5",
+            "columnName": "a5",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "a6",
+            "columnName": "a6",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a7",
+            "columnName": "a7",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a8",
+            "columnName": "a8",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a9",
+            "columnName": "a9",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a10",
+            "columnName": "a10",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "a11",
+            "columnName": "a11",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "address",
@@ -91,7 +157,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4bc57beb9545c9c4a709c581ae6aadb8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6207f99fb2a0a28bb7a61d6a9d67c373')"
     ]
   }
 }
