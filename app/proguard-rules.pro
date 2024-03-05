@@ -94,3 +94,7 @@
 -keepclassmembers  class com.kiosoft2.encrypt.EncryptServiceImpl {
     public <methods>;
 }
+#不混淆apt产生的辅助类
+-keep class com.kiosoft2.apt.** { *; }
+-keep class com.kiosoft2.apt.**.** { *; }
+-keep @com.kiosoft2.annotions.** class * {*;}

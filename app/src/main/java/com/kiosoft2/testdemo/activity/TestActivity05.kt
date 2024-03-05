@@ -1,9 +1,9 @@
 package com.kiosoft2.testdemo.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.kiosoft2.annotation.AParameter
 import com.kiosoft2.api.RoomOperator
 import com.kiosoft2.api.type.OrderByType
 import com.kiosoft2.common.autoservice.ServiceLoad
@@ -11,6 +11,7 @@ import com.kiosoft2.common.autoservice.service.TaskService
 import com.kiosoft2.common.click.ClickExe.setSafeOnClickListener
 import com.kiosoft2.common.click.annotions.SingleTime
 import com.kiosoft2.common.encrypt.EncryptService
+import com.kiosoft2.common.router.ARouterOperator
 import com.kiosoft2.testdemo.databinding.ActivityTest01Binding
 import com.kiosoft2.common.task.annotions.DelayedTask
 import com.kiosoft2.common.task.annotions.TaskBindDisposable
@@ -30,6 +31,8 @@ import java.util.concurrent.TimeUnit
 class TestActivity05 : AppCompatActivity(), TaskReLoadCallback {
     lateinit var task1:TaskInfo
     lateinit var task2s:TaskInfo
+    @AParameter
+    var name:String? = null
 
     /**
      * 任务缓存服务
@@ -52,7 +55,8 @@ class TestActivity05 : AppCompatActivity(), TaskReLoadCallback {
 //        }.value
         mBinding.btnNext.setSafeOnClickListener {
            // startActivity(Intent(this@TestActivity05,TestActivity03::class.java))
-            Log.d("lance", "加密测试: ${encryptService?.getEncrypt("121212")}")
+//            Log.d("lance", "加密测试: ${encryptService?.getEncrypt("121212")}")
+            ARouterOperator.op(TestActivity04::class.java).withString("name","张三").withBoolean("ss",false).navigation(this,false)
         }
         mBinding.btnStop.setOnClickListener {
 //            testSingleTime()
@@ -94,6 +98,7 @@ class TestActivity05 : AppCompatActivity(), TaskReLoadCallback {
     }
     @RunInIO
     fun testDBInset(){
+
         val randUser = arrayOf(
             "刘德华",
             "张三",

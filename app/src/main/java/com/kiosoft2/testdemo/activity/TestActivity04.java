@@ -3,9 +3,14 @@ package com.kiosoft2.testdemo.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import com.kiosoft2.annotation.AParameter;
+import com.kiosoft2.api.aparameter.AParameterManager;
+import com.kiosoft2.common.router.ARouterOperator;
 import com.kiosoft2.testdemo.R;
 import com.kiosoft2.common.click.ClickExe;
 import com.kiosoft2.common.task.annotions.DelayedTask;
@@ -13,6 +18,7 @@ import com.kiosoft2.common.task.annotions.TaskBindDisposable;
 import com.kiosoft2.common.task.annotions.TaskComplete;
 import com.kiosoft2.common.task.annotions.TaskThread;
 import com.kiosoft2.common.task.annotions.RecurringTask;
+import com.kiosoft2.testdemo.Test1Fragment;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,10 +28,16 @@ import io.reactivex.rxjava3.disposables.Disposable;
 public class TestActivity04 extends AppCompatActivity {
     Disposable task1;
     Disposable task2s;
+    @AParameter
+    public String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test01);
+        AParameterManager.Companion.getInstance().load(this);
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        Fragment f = ARouterOperator.Companion.op(Test1Fragment.class).withString("name","李四").navigation();
+//        Toast.makeText(this, f, Toast.LENGTH_SHORT).show();
 //        findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

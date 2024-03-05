@@ -696,17 +696,17 @@ DBOperator.init(this);
     
      * @description: 描述
        */
-      @Database(entities = [User::class,Book::class], exportSchema = true, version = 1)
+        @Database(entities = [User::class,Book::class], exportSchema = true, version = 1)
        abstract class DBOperator : RoomOperator() {
-      override fun <T> getEntity(entityClass: Class<T>): Entity<T> {
+        override fun <T> getEntity(entityClass: Class<T>): Entity<T> {
            return EntityManager.getEntity(entityClass)
        }
 
        abstract fun getBookDao(): BookDao?
-    
+      
        companion object {
            private var dbOperator: DBOperator? = null
-    
+      
            /**
             * 初始化数据库
             */
@@ -721,7 +721,7 @@ DBOperator.init(this);
                        .build()
                }
            }
-      
+     
         fun get(): DBOperator? {
             return dbOperator
         }
@@ -848,6 +848,56 @@ kapt "androidx.room:room-compiler:2.6.1"
                 }
             }
         }
+```
+
+# 页面跳转控制器
+
+### activity跳转（参数传递）
+
+```kotlin
+ARouterOperator.op(TestActivity04::class.java)
+	.withString("name","张三")
+	.withBoolean("ss",false)
+	.navigation(this)//不关闭当前界面
+	.................
+	.................
+	.navigation(this,true)//关闭当前界面
+	.....................
+	.....................
+	.navigation(this,100001，true)//设置requestCode 走startActivityResult
+```
+
+### 获取Fragment对象（参数传递）
+
+```kotlin
+Fragment f = ARouterOperator.Companion.op(Test1Fragment.class)
+	.withString("name","李四")
+	.navigation();
+```
+
+### 目标页面参数接收
+
+```kotlin
+public class TestActivity04 extends AppCompatActivity {
+    @AParameter
+    public String name; //public类型
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test01);
+        AParameterManager.Companion.getInstance().load(this);//使用前进行参数绑定
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+```
+
+```kotlin
+class Test1Fragment:Fragment() {
+    @AParameter
+    var name:String? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        AParameterManager.instance.load(this)
+    }
+}
 ```
 
 ## 混淆配置

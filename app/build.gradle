@@ -102,7 +102,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     api project(path:':common')
     api project(path:':api')
-    kapt project(path: ':processor')
+    api project(path:':annotation')
+    kapt project(path:':processor')
     kapt "androidx.room:room-compiler:2.6.1"
 
 }
